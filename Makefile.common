@@ -1,0 +1,69 @@
+OBJECTS = main.o utils.o timer.o hashmap.o csr.o csr_partition.o csr_partition_mpi.o csr_partition_bin_mpi.o pagerank_mpi.o list.o csr_sspath.o csr_sspath_array.o array.o csr_bc.o preprocess.o
+FLAGS = -lrt -openmp -DUSE_MPI -DUSE_NONBLOCK -DUSE_SYNC -DREV_STATS 
+CC = mpicc -cc=icc
+#CC = gcc
+debug=0
+g500=0
+omp=1
+pmg=1
+ptn=1
+dbin=0
+
+ifeq (${dbin}, 1)
+	FLAGS += -DDEBUG_BIN
+endif
+
+ifeq ($(g500), 1)
+	FLAGS += -DUSE_GRAPH500
+endif
+
+ifeq ($(pmg), 1)
+	FLAGS += -DUSE_PMG
+endif
+
+
+ifeq (${debug}, 1)
+  FLAGS += -g -DUSE_DEBUG
+else
+  FLAGS += -O3
+endif
+
+ifeq (${omp}, 1)
+  FLAGS += -DUSE_OMP
+endif
+
+#PR: $(OBJECTS)
+#	$(CC) $(FLAGS) $(LIB) $(INC) -o PR $(OBJECTS)
+#main.o : main.c graph.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c main.c
+#timer.o : timer.c timer.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c timer.c
+#utils.o : utils.c utils.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c utils.c
+#hashmap.o : hashmap.c hashmap.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c hashmap.c
+#csr.o : csr.c graph.h csr.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr.c
+#csr_partition.o : csr_partition.c graph.h csr_partition.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_partition.c
+#csr_partition_mpi.o : csr_partition_mpi.c graph.h csr_partition_mpi.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_partition_mpi.c
+#csr_partition_bin_mpi.o : csr_partition_bin_mpi.c graph.h csr_partition_bin_mpi.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_partition_bin_mpi.c
+#pagerank_mpi.o : pagerank_mpi.c graph.h utils.h pagerank_mpi.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c pagerank_mpi.c
+#list.o : list.c list.h graph.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c list.c
+#array.o : array.c array.h graph.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c array.c
+#csr_sspath.o : csr_sspath.c graph.h list.h csr_sspath.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_sspath.c
+#csr_sspath_array.o : csr_sspath_array.c graph.h list.h array.h timer.h csr_sspath_array.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_sspath_array.c
+#csr_bc.o : csr_bc.c graph.h list.h csr_bc.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c csr_bc.c
+#preprocess.o : preprocess.c preprocess.h
+#	$(CC) $(FLAGS) $(LIB) $(INC) -c preprocess.c
+
+clean :
+	rm $(OBJECTS) PR

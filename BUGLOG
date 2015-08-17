@@ -1,0 +1,20 @@
+2013/08/12
+fixed bug of comput_partition
+
+2013/08/13
+fixed bug of partition data
+
+2013/08/27
+fixed bug of reading graph 500 binary data (binray data is different from text data, there is some accuracy lost in text data).
+
+2013/08/30
+fixed bug of repeatly computing the target new value by adding reuqest value and vertex value.
+
+2013/09/03
+finished code for computing reduced message
+
+2013/09/07
+verified the correctness of the preprocessing function
+
+2013/09/08
+now the code can do local recude now.
